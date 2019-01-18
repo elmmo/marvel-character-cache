@@ -1,0 +1,14 @@
+
+public class BackendTest {
+
+	public static void main(String[] args) {
+		Backend b = new Backend(); 
+		try {
+			b.hashCode(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

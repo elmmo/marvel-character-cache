@@ -1,0 +1,31 @@
+import java.lang.reflect.Method;
+
+import org.junit.Test;
+
+import org.junit.Assert;
+
+public class BackendTests {
+	Backend b; 
+	
+	@Before 
+	public void setUp() {
+		b = new Backend(); 
+	}
+	
+	@Test
+	public void constructURLTest() {
+		String expected = "99B500BD1172847E52BFB8BCA5BC0515"; 
+		Backend b = new Backend(); 
+		try {
+			Ba
+			Class c = Class.forName("Backend"); 
+			Method method = c.getDeclaredMethod("generateHashKey", null); 
+			method.setAccessible(true);
+			String res = (String)method.invoke("generateHashKey", new Backend()); 
+			Assert.assertEquals(expected, res);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

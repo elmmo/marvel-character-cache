@@ -1,0 +1,19 @@
+import static org.junit.Assert.*;
+
+import java.lang.reflect.Method;
+
+import org.junit.Test;
+
+public class BackendTests {
+	
+	@Test
+	public void constructURLTest() {
+		Backend b = new Backend(); 
+		Class c = b.getClass(); 
+		Method method = b.getDeclaredMethod()
+				//("makeRequest", argClasses);
+		method.setAccessible(true);
+		return method.invoke(targetObject, argObjects);
+	}
+
+}
