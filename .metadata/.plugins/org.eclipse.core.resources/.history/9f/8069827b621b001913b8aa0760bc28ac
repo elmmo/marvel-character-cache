@@ -1,5 +1,0 @@
-import java.net.HttpUrlConnection; 
-
-public class Backend {
-	
-}

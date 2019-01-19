@@ -15,7 +15,7 @@ public class BackendTests {
 	
 	@Test
 	public void constructURLTest() {
-		String expected = "***********"; 
+		String expected = "********************"; 
 		Backend b = new Backend(); 
 		try {
 			Class c = b.getClass(); 
