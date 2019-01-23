@@ -5,10 +5,13 @@ public class BackendTest {
 		APIConnection a = new APIConnection(); 
 		Storage s = new Storage(); 
 		Parser p = new Parser(s); 
-		RequestByName r = new RequestByName(a); 
+		RequestByName r = new RequestByName(a, "Spider Man");
+		RequestByEvent e = new RequestByEvent(a, "Age of Ultron"); 
 		
-		p.parseJson(r.connectByName("Spider Man"));
+		r.storeCharacters(p, s);
+		e.storeCharacters(p, s);
 		
+		System.out.println(s.characters);
 	}
 
 }

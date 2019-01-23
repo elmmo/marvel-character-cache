@@ -11,4 +11,6 @@ public class Storage {
 		characters = new HashMap<Integer, Character>(); 
 		characterCount = 0; 
 	}
+	
+	
 }

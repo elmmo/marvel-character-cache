@@ -8,14 +8,13 @@ public class Parser {
 		storage = s; 
 	}
 	
-	public void parseJson(JSONObject obj) {
+	public void parseToCharacter(JSONObject obj) {
 		// if this is the first session request, set the attribution text 
 		if (storage.attrText == null) {
 			storage.attrText = extract("attributionText", obj); 
 		}
-		
-		JSONObject data = extract("data", obj); 
-		JSONArray results = extract("results", data); 
+	
+		JSONArray results = getResults(obj); 
 		
 		for (int i = 0; i < results.size(); i++) {
 			JSONObject storedResp = null; 
@@ -32,11 +31,15 @@ public class Parser {
 			if (results.size() == 1) storedResp = obj; 
 			
 			storage.characters.put(storage.characterCount, new Character(id, name, desc, path, storedResp)); 
-			System.out.println(storage.characters.get(1));
 		}
 	}
 	
-	private <T> T extract(String target, JSONObject obj) {
+	public static JSONArray getResults(JSONObject obj) {
+		JSONObject data = extract("data", obj); 
+		return extract("results", data); 
+	}
+	
+	protected static <T> T extract(String target, JSONObject obj) {
 		T extracted = (T)obj.get(target); 
 		return extracted; 
 	}
