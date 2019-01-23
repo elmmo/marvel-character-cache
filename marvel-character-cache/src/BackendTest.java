@@ -6,13 +6,14 @@ public class BackendTest {
 		Storage s = new Storage(); 
 		Parser p = new Parser(s); 
 		
-		RequestByEvent e = new RequestByEvent(a, p, s); 
-		RequestByName n = new RequestByName(a, p, s); 
+		RequestByEvent event = new RequestByEvent(a, p, s); 
+		RequestByName name = new RequestByName(a, p, s); 
 		
-		Character[] arr = e.get("Age of Ultron"); 
+		Character[] arr = event.get("Age of Ultron"); 
 		s.printArray(arr);
 		
-		Character spidy = n.get("Spider-Man")[0];
+		Character spidy = name.get("Spider-Man")[0];
+		System.out.println(spidy);
 		
 //		RequestByName r = new RequestByName(a, p, s); 
 //		System.out.println(s.characters.size());
