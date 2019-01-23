@@ -5,14 +5,25 @@ import java.net.URL;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
+/** 
+ * All requests are managed and faciliated by this class 
+ */
 public class APIConnection {
 	BufferedReader bReader; 
 	int requestCount; 
 	
+	/** 
+	 * Instantiates the API connection and keeps track of the numbe of requests 
+	 */
 	APIConnection() {
 		requestCount = 1; 
 	}
 	
+	/** 
+	 * Provides the base connection the API 
+	 * @param url	the endpoint to hit on the API
+	 * @return		a JSON object with the response
+	 */
 	protected JSONObject connect(String url) {
 		StringBuilder sb = new StringBuilder(); 
 		JSONParser parser = new JSONParser(); 
@@ -40,5 +51,9 @@ public class APIConnection {
 		return null; 
 	}
 	
+	/** 
+	 * Gets the number of requests for the purposes of providing a timestamp 
+	 * @return	the number of requests
+	 */
 	public int getRequestCount() { return requestCount; } 
 }
