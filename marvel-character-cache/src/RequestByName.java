@@ -1,5 +1,4 @@
 import java.util.Map.Entry;
-
 import org.json.simple.JSONObject;
 
 public class RequestByName extends Request {
@@ -14,8 +13,14 @@ public class RequestByName extends Request {
 		int index = verify(name); 
 		Character[] c = new Character[1]; 
 		if (index == -1) {
-			c = parser.parseToCharacter(connectByName());
+			System.out.println("called from -1");
+			try {
+				c = parser.parseToCharacter(connect());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
+			System.out.println("called from 1");
 			c[0] = storage.characters.get(index); 
 		}
 		return c; 
@@ -30,7 +35,7 @@ public class RequestByName extends Request {
 		return -1; 
 	}
 
-	public JSONObject connectByName() {
+	public JSONObject connect() {
 		String hash = generateHashKey(); 
 		if (hash != null) {
 			String q = name.replaceAll(" ", "-"); 

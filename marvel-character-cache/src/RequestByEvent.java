@@ -14,7 +14,11 @@ public class RequestByEvent extends Request {
 		this.name = event; 
 		Character[] c = null; 
 		if (verify(name) == -1) {
-			c = parser.parseToCharacter(connectByEvent()); 
+			try {
+				c = parser.parseToCharacter(connect()); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			storage.events.put(name, c); 
 		} else {
 			c = storage.events.get(event); 
@@ -31,7 +35,7 @@ public class RequestByEvent extends Request {
 		return -1; 
 	}
 
-	public JSONObject connectByEvent() {
+	public JSONObject connect() {
 		int id = getEventId(); 
 		String hash = generateHashKey(); 
 		if (hash != null) {

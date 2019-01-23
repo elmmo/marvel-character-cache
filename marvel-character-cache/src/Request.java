@@ -2,6 +2,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 
+import org.json.simple.JSONObject;
+
 public abstract class Request {
 	String baseURL = "http://gateway.marvel.com/v1/public/";
 	final String PUBLIC_KEY = "2c8392e496d45de55500e5dd1748ba60"; 
@@ -19,6 +21,8 @@ public abstract class Request {
 	public abstract Character[] get(String name); 
 	
 	public abstract int verify(String query); 
+	
+	public abstract JSONObject connect(); 
 	
 	protected String generateHashKey() {
 		try {
