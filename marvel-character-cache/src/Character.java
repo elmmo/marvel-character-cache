@@ -28,4 +28,6 @@ public class Character {
 	public String getThumbnail() { return thumbnail; } 
 	
 	public JSONObject getResponse() { return response; }
+	
+	public void setResponse(JSONObject res) { response = res; }
 }

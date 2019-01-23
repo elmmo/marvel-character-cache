@@ -8,7 +8,7 @@ public class Parser {
 		storage = s; 
 	}
 	
-	public void parseToCharacter(JSONObject obj) {
+	public Character[] parseToCharacter(JSONObject obj) throws Exception {
 		// if this is the first session request, set the attribution text 
 		if (storage.attrText == null) {
 			storage.attrText = extract("attributionText", obj); 
@@ -16,22 +16,44 @@ public class Parser {
 	
 		JSONArray results = getResults(obj); 
 		
-		for (int i = 0; i < results.size(); i++) {
+		// ensures that no more than the max number of entries will be in the cache at any given time 
+		int entries = (results.size() > storage.CHARACTER_LIMIT) ? storage.CHARACTER_LIMIT : results.size(); 
+		
+		// ensures that there's enough room in the cache to add more entries
+		boolean canAdd = true; 
+		int limit = storage.CHARACTER_DELETION_RATE; 
+		int tracker = 0; 
+		do { 
+			if (entries + storage.characters.size() > storage.CHARACTER_LIMIT) { 
+				storage.expandCharacters(); 
+			} else { 
+				canAdd = false; 
+			} 
+			tracker++; 
+			if (tracker >= limit) throw new Exception("There's probably an error because the refresh has gone on too long."); 
+		} while (canAdd); 
+		
+		Character[] added = new Character[entries]; 
+		
+		for (int i = 0; i < entries; i++) {
 			JSONObject storedResp = null; 
 			
 			JSONObject personal = (JSONObject)results.get(i); 
 			long id = extract("id", personal); 
 			String name = extract("name", personal); 
-			String desc = extract("description", personal); 
+			String desc = extract("description", personal).equals("") ? "No description available." : extract("description", personal); 
 			JSONObject img = extract("thumbnail", personal); 
 			String path = extract("path", img) + "." + extract("extension", img); 
 			storage.characterCount++; 
 			
 			// if there's only one object returned, store the json response in the character 
-			if (results.size() == 1) storedResp = obj; 
+			storedResp = (results.size() == 1) ? obj : personal; 
 			
-			storage.characters.put(storage.characterCount, new Character(id, name, desc, path, storedResp)); 
+			Character c = new Character(id, name, desc, path, storedResp); 
+			storage.characters.put(storage.characterCount, c); 
+			added[i] = c; 
 		}
+		return added; 
 	}
 	
 	public static JSONArray getResults(JSONObject obj) {
