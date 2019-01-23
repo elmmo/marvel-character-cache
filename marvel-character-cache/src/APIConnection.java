@@ -39,4 +39,6 @@ public class APIConnection {
 		}
 		return null; 
 	}
+	
+	public int getRequestCount() { return requestCount; } 
 }

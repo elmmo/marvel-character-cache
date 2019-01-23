@@ -5,13 +5,17 @@ public class BackendTest {
 		APIConnection a = new APIConnection(); 
 		Storage s = new Storage(); 
 		Parser p = new Parser(s); 
-		RequestByName r = new RequestByName(a, "Spider Man");
-		RequestByEvent e = new RequestByEvent(a, "Age of Ultron"); 
+		RequestByName r = new RequestByName(a, p, s); 
+		System.out.println(s.characters.size());
+		System.out.println(r.get("Wolverine")[0]); 
+		System.out.println(r.get("Wolverine")[0]); 
+		System.out.println(s.characters.size());
 		
-		r.storeCharacters(p, s);
-		e.storeCharacters(p, s);
+		RequestByEvent e = new RequestByEvent(a, p, s);
 		
-		System.out.println(s.characters);
+		System.out.println(e.get("Age of Ultron"));
+		System.out.println(e.get("Age of Ultron"));
+		System.out.println(s.characters.size());
 	}
 
 }

@@ -8,13 +8,14 @@ public class Parser {
 		storage = s; 
 	}
 	
-	public void parseToCharacter(JSONObject obj) {
+	public Character[] parseToCharacter(JSONObject obj) {
 		// if this is the first session request, set the attribution text 
 		if (storage.attrText == null) {
 			storage.attrText = extract("attributionText", obj); 
 		}
 	
 		JSONArray results = getResults(obj); 
+		Character[] added = new Character[results.size()]; 
 		
 		for (int i = 0; i < results.size(); i++) {
 			JSONObject storedResp = null; 
@@ -22,7 +23,7 @@ public class Parser {
 			JSONObject personal = (JSONObject)results.get(i); 
 			long id = extract("id", personal); 
 			String name = extract("name", personal); 
-			String desc = extract("description", personal); 
+			String desc = extract("description", personal).equals("") ? "No description available." : extract("description", personal); 
 			JSONObject img = extract("thumbnail", personal); 
 			String path = extract("path", img) + "." + extract("extension", img); 
 			storage.characterCount++; 
@@ -30,8 +31,11 @@ public class Parser {
 			// if there's only one object returned, store the json response in the character 
 			if (results.size() == 1) storedResp = obj; 
 			
-			storage.characters.put(storage.characterCount, new Character(id, name, desc, path, storedResp)); 
+			Character c = new Character(id, name, desc, path, storedResp); 
+			storage.characters.put(storage.characterCount, c); 
+			added[i] = c; 
 		}
+		return added; 
 	}
 	
 	public static JSONArray getResults(JSONObject obj) {

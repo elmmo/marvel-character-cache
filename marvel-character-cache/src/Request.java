@@ -7,26 +7,29 @@ public abstract class Request {
 	final String PUBLIC_KEY = "2c8392e496d45de55500e5dd1748ba60"; 
 	final String PRIVATE_KEY = "6cdcd2e0e33d1ddcc1823e941ed5f2cd2512b7e0"; 
 	APIConnection api; 
-	int requestId;
-	String hash; 
+	Parser parser; 
+	Storage storage; 
 	
-	Request(APIConnection api) {
+	Request(APIConnection api, Parser parser, Storage storage) {
 		this.api = api; 
-		this.requestId = api.requestCount; 
-		try {
-			this.hash = generateHashKey(); 
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+		this.parser = parser; 
+		this.storage = storage; 
 	}
 	
-	public abstract void storeCharacters(Parser p, Storage s);
+	public abstract Character[] get(String name); 
 	
-	private String generateHashKey() throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("MD5"); 
-		String toConvert = requestId + PRIVATE_KEY + PUBLIC_KEY;
-		md.update(toConvert.getBytes());
-		byte[] digest = md.digest(); 
-		return DatatypeConverter.printHexBinary(digest).toLowerCase(); 
+	public abstract int verify(String query); 
+	
+	protected String generateHashKey() {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5"); 
+			String toConvert = api.getRequestCount() + PRIVATE_KEY + PUBLIC_KEY;
+			md.update(toConvert.getBytes());
+			byte[] digest = md.digest(); 
+			return DatatypeConverter.printHexBinary(digest).toLowerCase(); 
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace(); 
+		}
+		return null; 
 	}
 }
