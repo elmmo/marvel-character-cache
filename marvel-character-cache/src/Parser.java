@@ -32,6 +32,7 @@ public class Parser {
 			if (results.size() == 1) storedResp = obj; 
 			
 			storage.characters.put(storage.characterCount, new Character(id, name, desc, path, storedResp)); 
+			System.out.println(storage.characters.get(1));
 		}
 	}
 	

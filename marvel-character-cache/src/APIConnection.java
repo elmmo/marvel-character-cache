@@ -1,13 +1,9 @@
 import java.io.BufferedReader;
-import java.util.HashMap; 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
-import javax.xml.bind.DatatypeConverter; 
 
 public class APIConnection {
 	BufferedReader bReader; 
@@ -17,18 +13,7 @@ public class APIConnection {
 		requestCount = 1; 
 	}
 	
-	public JSONObject request(String name) {
-		String q = name.replaceAll(" ", "-"); 
-		try {
-			RequestByName r = new RequestByName(this); 
-			return connect(r.constructByName("Spider-Man")); 
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return null; 
-	}
-	
-	private JSONObject connect(String url) {
+	protected JSONObject connect(String url) {
 		StringBuilder sb = new StringBuilder(); 
 		JSONParser parser = new JSONParser(); 
 		try {
@@ -47,6 +32,7 @@ public class APIConnection {
 				bReader.close(); 
 			}
 			con.disconnect(); 
+			requestCount++; 
 			return (JSONObject)parser.parse(sb.toString()); 
 		} catch (Exception e) {
 			e.printStackTrace(); 
