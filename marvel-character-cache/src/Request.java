@@ -3,7 +3,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 
 public abstract class Request {
-	String baseURL = "http://gateway.marvel.com/v1/public/characters?";
+	String baseURL = "http://gateway.marvel.com/v1/public/";
 	final String PUBLIC_KEY = "2c8392e496d45de55500e5dd1748ba60"; 
 	final String PRIVATE_KEY = "6cdcd2e0e33d1ddcc1823e941ed5f2cd2512b7e0"; 
 	APIConnection api; 
@@ -19,6 +19,8 @@ public abstract class Request {
 			e.printStackTrace();
 		}
 	}
+	
+	public abstract void storeCharacters(Parser p, Storage s);
 	
 	private String generateHashKey() throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5"); 
