@@ -55,4 +55,8 @@ public class Storage {
 			System.out.println(characters.get(i).toString());
 		}
 	}
+	
+	public int getCharactersSize() { 
+		return characters.size(); 
+	}
 }

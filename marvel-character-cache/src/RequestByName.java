@@ -11,7 +11,7 @@ public class RequestByName extends Request {
 	public Character[] get(String name) {
 		this.name = name; 
 		int index = verify(name); 
-		Character[] c = new Character[1]; 
+		Character[] c = new Character[1];
 		if (index == -1) {
 			System.out.println("called from -1");
 			try {
