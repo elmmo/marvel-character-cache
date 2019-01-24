@@ -1,6 +1,9 @@
 import java.util.TreeSet; 
 import java.util.HashMap;
 
+/** 
+ * Acts as the cache for the entire program 
+ */
 public class Storage {
 	protected String attrText; 
 	protected HashMap<Integer, Character> characters; 
@@ -11,6 +14,9 @@ public class Storage {
 	final int CHARACTER_DELETION_RATE = 5; 
 	final int EVENT_DELETION_RATE = 1; 
 	
+	/** 
+	 * Instantiates each of the storage objects 
+	 */
 	Storage() {
 		attrText = null; 
 		characters = new HashMap<Integer, Character>(); 
@@ -18,12 +24,20 @@ public class Storage {
 		characterCount = 0; 
 	}
 	
+	/** 
+	 * Strips queries of common special separators to reduce the chance of false positives 
+	 * @param str	the string to strip
+	 * @return		the stripped string 
+	 */
 	public String strip(String str) {
 		str = str.replaceAll(" ", ""); 
 		str = str.replaceAll("-", ""); 
 		return str.toLowerCase(); 
 	}
 	
+	/** 
+	 * Expands the amount of available space in the characters cache by deleting the oldest entries 
+	 */
 	public void expandCharacters() {
 		// find the smallest values (the oldest entries) in the characters array 
 		TreeSet<Integer> oldest = new TreeSet<Integer>(); 
@@ -44,18 +58,29 @@ public class Storage {
 		}
 	}
 	
+	/** 
+	 * Prints out the given array 
+	 * @param arr	the array to print 
+	 */
 	public void printArray(Character[] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			System.out.println(arr[i].toString());
 		}
 	}
 	
+	/** 
+	 * Prints out all the characters in-cache 
+	 */
 	public void printAllCharacters() {
 		for (int i = 1; i < characters.size(); i++) {
 			System.out.println(characters.get(i).toString());
 		}
 	}
 	
+	/** 
+	 * Gets the size of the characters array 
+	 * @return	the size of the array 
+	 */
 	public int getCharactersSize() { 
 		return characters.size(); 
 	}

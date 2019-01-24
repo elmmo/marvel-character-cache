@@ -2,14 +2,28 @@ import org.json.simple.JSONObject;
 import java.util.Map.Entry;
 import org.json.simple.JSONArray; 
 
+/** 
+ * Implements the methods enforced by Request to create requests by event name 
+ */
 public class RequestByEvent extends Request {
 	StringBuilder sb; 
 	String name; 
 	
+	/** 
+	 * Uses the existing super constructor to store the necessary components 
+	 * @param api		the api connection to use 
+	 * @param parser	the parser to use 
+	 * @param storage	the storage to use 
+	 */
 	RequestByEvent(APIConnection api, Parser p, Storage s) {
 		super(api, p, s);
 	}
 	
+	/** 
+	 * Gets the array of characters returned when querying by event 
+	 * @param event		the name of the event to query 
+	 * @return			the characters affiliated with the event 
+	 */
 	public Character[] get(String event) { 
 		this.name = event; 
 		Character[] c = null; 
@@ -26,6 +40,11 @@ public class RequestByEvent extends Request {
 		return c; 
 	}
 	
+	/** 
+	 * Checks if the query is already in storage 
+	 * @param query	the event to search for 
+	 * @return	returns 1 if it is in storage, returns -1 if not 
+	 */
 	public int verify(String query) { 
 		String q = storage.strip(query); 
 		for (Entry<String, Character[]> entry : storage.events.entrySet()) {
@@ -35,6 +54,10 @@ public class RequestByEvent extends Request {
 		return -1; 
 	}
 
+	/** 
+	 * Connects to the API by creating a request based on the event name 
+	 * @return	the JSON response 
+	 */
 	public JSONObject connect() {
 		int id = getEventId(); 
 		String hash = generateHashKey(); 
@@ -48,6 +71,10 @@ public class RequestByEvent extends Request {
 		}
 	}
 	
+	/** 
+	 * Searches through the events first to get an event id to pass to the characters connect method 
+	 * @return	the id of the event 
+	 */
 	private int getEventId() {
 		String q = name.replaceAll(" ", "%20"); 
 		String hash = generateHashKey(); 
