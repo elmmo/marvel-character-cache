@@ -1,13 +1,27 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/** 
+ * Parses and stores the information received from the API 
+ *
+ */
 public class Parser {
 	Storage storage; 
 	
+	/** 
+	 * Instantiates parser with a storage component 
+	 * @param s	the storage component to use 
+	 */
 	Parser(Storage s) {
 		storage = s; 
 	}
 	
+	/** 
+	 * Parses the passed JSONObject into an array of character objects 
+	 * @param obj	the object to search for characters in 
+	 * @return		the array of characters that's created 
+	 * @throws Exception	if the expansion of the array didn't work 
+	 */
 	public Character[] parseToCharacter(JSONObject obj) throws Exception {
 		// if this is the first session request, set the attribution text 
 		if (storage.attrText == null) {
@@ -35,6 +49,7 @@ public class Parser {
 		
 		Character[] added = new Character[entries]; 
 		
+		// iterates over every potential character entry 
 		for (int i = 0; i < entries; i++) {
 			JSONObject storedResp = null; 
 			
@@ -56,11 +71,22 @@ public class Parser {
 		return added; 
 	}
 	
+	/** 
+	 * Single helper function used for getting results of a query directly 
+	 * @param obj	the object to search for the results in 
+	 * @return		an array of characters in raw response data 
+	 */
 	public static JSONArray getResults(JSONObject obj) {
 		JSONObject data = extract("data", obj); 
 		return extract("results", data); 
 	}
 	
+	/** 
+	 * A generic method used for typecasting and storing information from the array 
+	 * @param target	the information to look for 
+	 * @param obj		where to look for the information 
+	 * @return			the desired information in the correct type 
+	 */
 	protected static <T> T extract(String target, JSONObject obj) {
 		T extracted = (T)obj.get(target); 
 		return extracted; 
